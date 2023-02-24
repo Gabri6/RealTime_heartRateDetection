@@ -2,6 +2,6 @@
 
 int main() 
 {
-  std::cout << "PPG algorithm";
+  std::cout << "PPG algorithm"<<std::endl;
   return 0;
 } 
