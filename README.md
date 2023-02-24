@@ -1,3 +1,3 @@
 # RealTime_heartRateDetection
 
-The basic implementation of PPG
+The best implementation of PPG
