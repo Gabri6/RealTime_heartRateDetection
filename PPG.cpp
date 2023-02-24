@@ -6,6 +6,7 @@
 int main() 
 {
 	float FPS = 30.0;
+	float DISCARD_DURATION = 2.0;
 	
 	bool isDiscardData = true;
 	int countDiscard = 0;
