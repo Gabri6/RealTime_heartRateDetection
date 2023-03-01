@@ -105,10 +105,27 @@ int main()
 			{ 
 				greenSignalNormalized.push_back((greenSignal.at<double>(0, l_sample) - mean[0])/stddev[0]); 
 			}
- 
+			
 			int range[2] = {0, (int)(FPS*BUFFER_DURATION)}; 
 			cv::imshow("green", plotGraph(greenSignalNormalized, range));
 			
+			//Compute discrete fourier transform
+			cv::Mat greenFFT; 
+			std::vector<double> greenFFTModule; 
+			 
+			cv::dft(greenSignalNormalized,greenFFT,cv::DFT_ROWS|cv::DFT_COMPLEX_OUTPUT); 
+			cv::Mat planes[] = {cv::Mat::zeros(greenSignalNormalized.size(),1, CV_64F), cv::Mat::zeros(greenSignalNormalized.size(),1, CV_64F)}; 
+			cv::split(greenFFT, planes);                   // planes[0] = Re(DFT(I), planes[1] = Im(DFT(I))
+			greenFFTModule.clear(); 
+			for (int l=0; l < planes[1].cols; l++) 
+			{ 
+				double moduleFFT = pow(planes[1].at<double>(0,l),2) + pow(planes[0].at<double>(0,l),2); 
+				greenFFTModule.push_back(sqrt(moduleFFT)); 
+			} 
+			 
+			// display green FFT 
+			cv::imshow("FFT module green", plotGraph(greenFFTModule, range));
+
 			cv::imshow("Color", frame); 
 			
 			if (cv::waitKey(1000.0/FPS) >= 0) 
