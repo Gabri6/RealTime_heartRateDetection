@@ -128,6 +128,27 @@ int main()
 
 			cv::imshow("Color", frame); 
 			
+			double maxVal = 0.0;
+			int maxIdx = -1;
+
+			double freqStep = FPS / static_cast<double>(greenFFTModule.size());//to have the frequency at the end, it is the interval (Hz) between each sample of the FFT 
+			double freqStart = 0.5;
+			double freqEnd = 4.0; 
+
+			// loop for the values in the interval
+			for (int i = static_cast<int>(freqStart / freqStep); i < static_cast<int>(freqEnd / freqStep); i++) {
+			    if (greenFFTModule[i] > maxVal) {
+				maxVal = greenFFTModule[i];
+				maxIdx = i;
+			    }
+			}
+
+			// max frequency peak
+			double maxFreq = freqStart + maxIdx * freqStep;
+			std::cout << "Max frequency: " << maxFreq << " Hz" << std::endl;
+			std::cout << "Max value: " << maxVal << std::endl;
+			std::cout << "BPM: " << maxFreq*60 << std::endl;
+			
 			if (cv::waitKey(1000.0/FPS) >= 0) 
 				break; 
 		}
