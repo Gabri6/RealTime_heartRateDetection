@@ -80,6 +80,14 @@ int main()
 					isBufferFull = true; 
 				} 
 			}
+			
+			std::vector<double> greenSignalNormalized; 
+			cv::Scalar mean, stddev; 
+			cv::meanStdDev(greenSignal, mean, stddev); 
+			for (int l_sample=0; l_sample < FPS*BUFFER_DURATION; l_sample++) 
+			{ 
+				greenSignalNormalized.push_back((greenSignal.at<double>(0, l_sample) - mean[0])/stddev[0]); 
+			}
  
 			cv::imshow("Color", frame); 
 			
