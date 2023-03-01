@@ -106,6 +106,9 @@ int main()
 				greenSignalNormalized.push_back((greenSignal.at<double>(0, l_sample) - mean[0])/stddev[0]); 
 			}
  
+			int range[2] = {0, (int)(FPS*BUFFER_DURATION)}; 
+			cv::imshow("green", plotGraph(greenSignalNormalized, range));
+			
 			cv::imshow("Color", frame); 
 			
 			if (cv::waitKey(1000.0/FPS) >= 0) 
