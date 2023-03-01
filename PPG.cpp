@@ -9,6 +9,23 @@ int countDiscard = 0;
 float DISCARD_DURATION = 2.0;
 float BUFFER_DURATION = 20.0;
 
+template <typename T> 
+cv::Mat plotGraph(std::vector<T>& vals, int YRange[2]) 
+{ 
+	auto it = minmax_element(vals.begin(), vals.end()); 
+	float scale = 1./ceil(*it.second - *it.first);  
+	float bias = *it.first; 
+	int rows = YRange[1] - YRange[0] + 1; 
+	cv::Mat image = 255*cv::Mat::ones( rows, vals.size(), CV_8UC3 ); 
+	image.setTo(255); 
+	for (int i = 0; i < (int)vals.size()-1; i++) 
+	{ 
+		cv::line(image, cv::Point(i, rows - 1 - (vals[i] - bias)*scale*YRange[1]), cv::Point(i+1, rows - 1 - (vals[i+1] - bias)*scale*YRange[1]), cv::Scalar(255, 0, 0), 1);
+	}
+
+	return image; 
+}
+
 int main()
 {
 	cv::VideoCapture cap; 
