@@ -131,9 +131,9 @@ int main()
 			double maxVal = 0.0;
 			int maxIdx = -1;
 
-			double freqStep = FPS / static_cast<double>(greenFFTModule.size());//to have the frequency at the end, it is the interval (Hz) between each sample of the FFT 
-			double freqStart = 0.5;
-			double freqEnd = 4.0; 
+			float freqStep = FPS / static_cast<double>(greenFFTModule.size());//to have the frequency at the end, it is the interval (Hz) between each sample of the FFT 
+			float freqStart = 0.5;
+			float freqEnd = 4.0; 
 
 			// loop for the values in the interval
 			for (int i = static_cast<int>(freqStart / freqStep); i < static_cast<int>(freqEnd / freqStep); i++) {
@@ -144,7 +144,7 @@ int main()
 			}
 
 			// max frequency peak
-			double maxFreq = freqStart + maxIdx * freqStep;
+			float maxFreq = freqStart + maxIdx * freqStep;
 			std::cout << "Max frequency: " << maxFreq << " Hz" << std::endl;
 			std::cout << "Max value: " << maxVal << std::endl;
 			std::cout << "BPM: " << maxFreq*60 << std::endl;
